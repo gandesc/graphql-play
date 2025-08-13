@@ -14,7 +14,7 @@ public class GraphqlController {
   }
 
   @QueryMapping
-  public Mono<String> sayHelloTo(@Argument String name) {
-    return Mono.fromSupplier(() -> "Hello " + name);
+  public Mono<String> sayHelloTo(@Argument("name") String value) {
+    return Mono.fromSupplier(() -> "Hello " + value);
   }
 }
