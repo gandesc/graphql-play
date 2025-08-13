@@ -1,4 +1,4 @@
-package com.gandesc.graphql_play;
+package com.gandesc.graphql_play.sec01.lec01;
 
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
