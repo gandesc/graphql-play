@@ -1,5 +1,6 @@
 package com.gandesc.graphql_play.sec01.lec02;
 
+import com.gandesc.graphql_play.sec01.lec02.dto.AgeRangeFilter;
 import com.gandesc.graphql_play.sec01.lec02.dto.Customer;
 import com.gandesc.graphql_play.sec01.lec02.service.CustomerService;
 import lombok.RequiredArgsConstructor;
@@ -27,5 +28,10 @@ public class CustomerController {
   @QueryMapping
   public Flux<Customer> customersNameContains(@Argument String name) {
     return this.service.nameContains(name);
+  }
+
+  @QueryMapping
+  public Flux<Customer> customersByAgeRange(@Argument AgeRangeFilter filter) {
+    return this.service.customersByAgeRange(filter);
   }
 }
