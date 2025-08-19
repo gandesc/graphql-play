@@ -3,6 +3,7 @@ package com.gandesc.graphql_play.sec01.lec04.service;
 import com.gandesc.graphql_play.sec01.lec04.dto.CustomerOrderDto;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.util.Collections;
 import java.util.List;
@@ -25,12 +26,19 @@ public class OrderService {
       )
   );
 
-  public Flux<CustomerOrderDto> ordersByCustomerName(String name) {
+  public Flux<CustomerOrderDto> ordersByCustomerNames(String name) {
     return Flux.fromIterable(map.getOrDefault(name, Collections.emptyList()));
   }
 
-  public Flux<List<CustomerOrderDto>> ordersByCustomerName(List<String> names) {
+  public Flux<List<CustomerOrderDto>> ordersByCustomerNames(List<String> names) {
     return Flux.fromIterable(names)
-        .map(name -> map.getOrDefault(name, Collections.emptyList()));
+        .flatMap(n-> fetchOrders(n)
+            //comment below for size mismatch demo
+            .defaultIfEmpty(Collections.emptyList())
+        );
+  }
+
+  private Mono<List<CustomerOrderDto>> fetchOrders(String name) {
+    return Mono.justOrEmpty(map.get(name));
   }
 }

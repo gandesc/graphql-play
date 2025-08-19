@@ -6,7 +6,6 @@ import com.gandesc.graphql_play.sec01.lec04.service.CustomerService;
 import com.gandesc.graphql_play.sec01.lec04.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.BatchMapping;
 import org.springframework.graphql.data.method.annotation.SchemaMapping;
 import org.springframework.stereotype.Controller;
@@ -34,7 +33,6 @@ public class CustomerController {
         .map(Customer::getName)
         .toList();
 
-    return this.orderService.ordersByCustomerName(names);
+    return this.orderService.ordersByCustomerNames(names);
   }
-
 }
