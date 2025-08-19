@@ -5,11 +5,12 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.time.Duration;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-
+import java.util.concurrent.ThreadLocalRandom;
 
 
 @Service
@@ -32,13 +33,16 @@ public class OrderService {
 
   public Flux<List<CustomerOrderDto>> ordersByCustomerNames(List<String> names) {
     return Flux.fromIterable(names)
-        .flatMap(n-> fetchOrders(n)
+        .flatMapSequential(n-> fetchOrders(n)
+         //uncomment below for order mismatch demo
+        //.flatMap(n-> fetchOrders(n)
             //comment below for size mismatch demo
             .defaultIfEmpty(Collections.emptyList())
         );
   }
 
   private Mono<List<CustomerOrderDto>> fetchOrders(String name) {
-    return Mono.justOrEmpty(map.get(name));
+    return Mono.justOrEmpty(map.get(name))
+        .delayElement(Duration.ofMillis(ThreadLocalRandom.current().nextInt(0,500)));
   }
 }
