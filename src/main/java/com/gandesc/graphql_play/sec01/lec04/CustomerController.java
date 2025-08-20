@@ -10,8 +10,10 @@ import org.springframework.graphql.data.method.annotation.BatchMapping;
 import org.springframework.graphql.data.method.annotation.SchemaMapping;
 import org.springframework.stereotype.Controller;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Controller
@@ -25,14 +27,21 @@ public class CustomerController {
     return this.service.allCustomers();
   }
 
+//  @BatchMapping(typeName = "Customer")
+//  public Flux<List<CustomerOrderDto>> orders(List<Customer> list) {
+//    log.info("fetching list of orders for customers {}", list);
+//
+//    List<String> names = list.stream()
+//        .map(Customer::getName)
+//        .toList();
+//
+//    return this.orderService.ordersByCustomerNames(names);
+//  }
+
   @BatchMapping(typeName = "Customer")
-  public Flux<List<CustomerOrderDto>> orders(List<Customer> list) {
+  public Mono<Map<Customer, List<CustomerOrderDto>>> orders(List<Customer> list) {
     log.info("fetching list of orders for customers {}", list);
 
-    List<String> names = list.stream()
-        .map(Customer::getName)
-        .toList();
-
-    return this.orderService.ordersByCustomerNames(names);
+    return this.orderService.fetchOrdersAsMap(list);
   }
 }

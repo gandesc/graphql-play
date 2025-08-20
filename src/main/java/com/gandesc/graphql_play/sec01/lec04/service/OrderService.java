@@ -1,9 +1,12 @@
 package com.gandesc.graphql_play.sec01.lec04.service;
 
+import com.gandesc.graphql_play.sec01.lec04.dto.Customer;
 import com.gandesc.graphql_play.sec01.lec04.dto.CustomerOrderDto;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import reactor.util.function.Tuple2;
+import reactor.util.function.Tuples;
 
 import java.time.Duration;
 import java.util.Collections;
@@ -33,9 +36,9 @@ public class OrderService {
 
   public Flux<List<CustomerOrderDto>> ordersByCustomerNames(List<String> names) {
     return Flux.fromIterable(names)
-        .flatMapSequential(n-> fetchOrders(n)
-         //uncomment below for order mismatch demo
-        //.flatMap(n-> fetchOrders(n)
+        .flatMapSequential(n -> fetchOrders(n)
+            //uncomment below for order mismatch demo
+            //.flatMap(n-> fetchOrders(n)
             //comment below for size mismatch demo
             .defaultIfEmpty(Collections.emptyList())
         );
@@ -43,6 +46,12 @@ public class OrderService {
 
   private Mono<List<CustomerOrderDto>> fetchOrders(String name) {
     return Mono.justOrEmpty(map.get(name))
-        .delayElement(Duration.ofMillis(ThreadLocalRandom.current().nextInt(0,500)));
+        .delayElement(Duration.ofMillis(ThreadLocalRandom.current().nextInt(0, 500)));
+  }
+
+  public Mono<Map<Customer, List<CustomerOrderDto>>> fetchOrdersAsMap(List<Customer> customers) {
+    return Flux.fromIterable(customers)
+        .map(c -> Tuples.of(c, map.getOrDefault(c.getName(), Collections.emptyList())))
+        .collectMap(Tuple2::getT1, Tuple2::getT2);
   }
 }
