@@ -3,7 +3,7 @@ package com.gandesc.graphql_play;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication(scanBasePackages = "com.gandesc.graphql_play.sec01.lec05")
+@SpringBootApplication(scanBasePackages = "com.gandesc.graphql_play.lec06")
 public class GraphqlPlayApplication {
 
 	public static void main(String[] args) {
