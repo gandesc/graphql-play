@@ -2,6 +2,7 @@ package com.gandesc.graphql_play.sec01.lec05;
 
 import com.gandesc.graphql_play.sec01.lec05.dto.Customer;
 import com.gandesc.graphql_play.sec01.lec05.service.CustomerService;
+import graphql.schema.DataFetchingEnvironment;
 import graphql.schema.DataFetchingFieldSelectionSet;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,8 +17,8 @@ public class CustomerController {
   private final CustomerService service;
 
   @QueryMapping
-  public Flux<Customer> customers(DataFetchingFieldSelectionSet selectionSet) {
-    log.info("customer: {}", selectionSet.getFields());
+  public Flux<Customer> customers(DataFetchingEnvironment environment) {
+    log.info("customer: {}", environment.getDocument());
 
     return this.service.allCustomers();
   }
