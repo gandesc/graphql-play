@@ -5,11 +5,12 @@ import com.gandesc.graphql_play.lec06.dto.CustomerOrderDto;
 import com.gandesc.graphql_play.lec06.service.CustomerService;
 import com.gandesc.graphql_play.lec06.service.OrderService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.graphql.data.method.annotation.Argument;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.graphql.data.method.annotation.SchemaMapping;
 import org.springframework.stereotype.Controller;
 import reactor.core.publisher.Flux;
 
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 public class CustomerController {
@@ -23,8 +24,7 @@ public class CustomerController {
 
   @SchemaMapping(typeName = "Customer")
   public Flux<CustomerOrderDto> orders(Customer customer) {
-    return this.orderService
-        .ordersByCustomerName(customer.getName());
+    return this.orderService.ordersByCustomerName(customer.getName());
   }
 
 }

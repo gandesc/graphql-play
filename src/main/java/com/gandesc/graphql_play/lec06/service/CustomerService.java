@@ -1,9 +1,13 @@
 package com.gandesc.graphql_play.lec06.service;
 
 import com.gandesc.graphql_play.lec06.dto.Customer;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 
+import java.time.Duration;
+
+@Slf4j
 @Service
 public class CustomerService {
   private final Flux<Customer> flux = Flux.just(
@@ -14,7 +18,8 @@ public class CustomerService {
   );
 
   public Flux<Customer> allCustomers() {
-    return flux;
+    return flux.delayElements(Duration.ofSeconds(1))
+        .doOnNext(c -> log.info("customer {}", c.getName()));
   }
 
 }
