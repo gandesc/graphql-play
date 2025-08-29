@@ -18,6 +18,7 @@ public class ScalarConfig {
         .scalar(ExtendedScalars.GraphQLBigInteger)
         .scalar(ExtendedScalars.Date)
         .scalar(ExtendedScalars.LocalTime)
-        .scalar(ExtendedScalars.DateTime);
+        .scalar(ExtendedScalars.DateTime)
+        .scalar(ExtendedScalars.Object);
   }
 }
