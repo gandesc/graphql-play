@@ -12,7 +12,7 @@ import java.util.UUID;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Fruit {
+public class FruitDto {
   @Builder.Default
   private UUID id = UUID.randomUUID();
   private String description;

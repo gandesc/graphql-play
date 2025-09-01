@@ -11,12 +11,12 @@ public class ProductController {
   @QueryMapping
   public Flux<Object> products() {
     return Flux.just(
-        Fruit.builder()
+        FruitDto.builder()
             .description("banana")
             .price(1)
             .expiration(LocalDate.now().plusDays(3))
             .build(),
-        Fruit.builder()
+        FruitDto.builder()
             .description("apple")
             .price(1)
             .expiration(LocalDate.now().plusDays(5))
