@@ -13,7 +13,16 @@ public class EntityDtoUtil {
     return entity;
   }
 
-  public static CustomerDto toEntity(Customer entity) {
+  public static Customer toEntity(Integer id, CustomerDto dto) {
+    Customer entity = new Customer();
+
+    BeanUtils.copyProperties(dto, entity);
+    entity.setId(id);
+
+    return entity;
+  }
+
+  public static CustomerDto toDto(Customer entity) {
     CustomerDto dto = new CustomerDto();
 
     BeanUtils.copyProperties(entity, dto);
