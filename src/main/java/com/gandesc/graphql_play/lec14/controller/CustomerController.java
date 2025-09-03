@@ -1,8 +1,8 @@
-package com.gandesc.graphql_play.lec13.controller;
+package com.gandesc.graphql_play.lec14.controller;
 
-import com.gandesc.graphql_play.lec13.dto.CustomerDto;
-import com.gandesc.graphql_play.lec13.dto.DeleteResponseDto;
-import com.gandesc.graphql_play.lec13.service.CustomerService;
+import com.gandesc.graphql_play.lec14.dto.CustomerDto;
+import com.gandesc.graphql_play.lec14.dto.DeleteResponseDto;
+import com.gandesc.graphql_play.lec14.service.CustomerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
@@ -10,8 +10,6 @@ import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-
-import java.time.Duration;
 
 @Controller
 @RequiredArgsConstructor
