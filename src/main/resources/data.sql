@@ -7,7 +7,7 @@ CREATE TABLE customer(
     city VARCHAR(50)
 );
 
-INSERT INTO customer(name, age, city) VALUES ('sam', 10, 'atlanta')
-INSERT INTO customer(name, age, city) VALUES ('mike', 15, 'houston')
-INSERT INTO customer(name, age, city) VALUES ('jame', 20, 'miami')
-INSERT INTO customer(name, age, city) VALUES ('john', 30, 'las vegas')
+INSERT INTO customer(name, age, city) VALUES ('sam', 10, 'atlanta');
+INSERT INTO customer(name, age, city) VALUES ('mike', 15, 'houston');
+INSERT INTO customer(name, age, city) VALUES ('jame', 20, 'miami');
+INSERT INTO customer(name, age, city) VALUES ('john', 30, 'las vegas');
