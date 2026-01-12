@@ -30,6 +30,10 @@ public class CustomerController {
 
   @MutationMapping
   public Mono<CustomerDto> createCustomer(@Argument CustomerDto customer) {
+    if(customer.getAge() !=null && customer.getAge() < 18) {
+      return ApplicationErrors.invalidUser("user is minor", customer);
+    }
+
     return this.service.createCustomer(customer);
   }
 
