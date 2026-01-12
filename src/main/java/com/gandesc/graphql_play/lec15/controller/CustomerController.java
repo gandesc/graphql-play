@@ -2,6 +2,7 @@ package com.gandesc.graphql_play.lec15.controller;
 
 import com.gandesc.graphql_play.lec15.dto.CustomerDto;
 import com.gandesc.graphql_play.lec15.dto.DeleteResponseDto;
+import com.gandesc.graphql_play.lec15.exceptions.ApplicationErrors;
 import com.gandesc.graphql_play.lec15.service.CustomerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.graphql.data.method.annotation.Argument;
@@ -23,8 +24,8 @@ public class CustomerController {
 
   @QueryMapping
   public Mono<CustomerDto> customerById(@Argument Integer id) {
-    //return this.service.customerById(id);
-    throw new RuntimeException("some weird issue");
+    return this.service.customerById(id)
+        .switchIfEmpty(ApplicationErrors.nuSuchUser(id));
   }
 
   @MutationMapping
