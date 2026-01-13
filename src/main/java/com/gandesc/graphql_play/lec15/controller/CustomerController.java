@@ -1,6 +1,7 @@
 package com.gandesc.graphql_play.lec15.controller;
 
 import com.gandesc.graphql_play.lec15.dto.CustomerDto;
+import com.gandesc.graphql_play.lec15.dto.CustomerNotFound;
 import com.gandesc.graphql_play.lec15.dto.DeleteResponseDto;
 import com.gandesc.graphql_play.lec15.exceptions.ApplicationErrors;
 import com.gandesc.graphql_play.lec15.service.CustomerService;
@@ -23,9 +24,10 @@ public class CustomerController {
   }
 
   @QueryMapping
-  public Mono<CustomerDto> customerById(@Argument Integer id) {
+  public Mono<Object> customerById(@Argument Integer id) {
     return this.service.customerById(id)
-        .switchIfEmpty(ApplicationErrors.nuSuchUser(id));
+        .cast(Object.class)
+        .switchIfEmpty(Mono.just(CustomerNotFound.builder().id(id).build()));
   }
 
   @MutationMapping
