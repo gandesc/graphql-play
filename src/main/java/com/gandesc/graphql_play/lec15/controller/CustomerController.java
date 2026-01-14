@@ -5,7 +5,9 @@ import com.gandesc.graphql_play.lec15.dto.CustomerNotFound;
 import com.gandesc.graphql_play.lec15.dto.DeleteResponseDto;
 import com.gandesc.graphql_play.lec15.exceptions.ApplicationErrors;
 import com.gandesc.graphql_play.lec15.service.CustomerService;
+import graphql.schema.DataFetchingEnvironment;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
@@ -13,13 +15,17 @@ import org.springframework.stereotype.Controller;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 public class CustomerController {
   private final CustomerService service;
 
   @QueryMapping
-  public Flux<CustomerDto> customers() {
+  public Flux<CustomerDto> customers(DataFetchingEnvironment env) {
+    var callerId = env.getGraphQlContext().get("caller-id");
+    log.info("Caller id: {}", callerId);
+
     return this.service.allCustomers();
   }
 
