@@ -11,8 +11,8 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import static com.gandesc.graphql_play.lec14.dto.Status.FAIL;
-import static com.gandesc.graphql_play.lec14.dto.Status.SUCCESS;
+import static com.gandesc.graphql_play.lec16.dto.Status.FAIL;
+import static com.gandesc.graphql_play.lec16.dto.Status.SUCCESS;
 
 @Service
 @RequiredArgsConstructor
