@@ -19,7 +19,7 @@ public class ClientDemo implements CommandLineRunner {
 
   @Override
   public void run(String... args) {
-      rawQueryDemo().subscribe();
+    getCustomerById().subscribe();
   }
 
   /* {
@@ -28,7 +28,6 @@ public class ClientDemo implements CommandLineRunner {
         }
       }
   * */
-
   private Mono<Void> rawQueryDemo() {
     String query = """
         {
@@ -47,6 +46,14 @@ public class ClientDemo implements CommandLineRunner {
     return Mono.delay(Duration.ofSeconds(1))
         .doFirst(() -> log.info("Raw Query"))
         .then(mono)
+        .doOnNext(i -> log.info("result: {}", i))
+        .then();
+  }
+
+  private Mono<Void> getCustomerById() {
+    return Mono.delay(Duration.ofSeconds(1))
+        .doFirst(() -> log.info("Get Customer By Id"))
+        .then(this.client.getCustomerById(1))
         .doOnNext(i -> log.info("result: {}", i))
         .then();
   }
