@@ -1,8 +1,5 @@
 query GetCustomerById($id: ID!) {
-    a: customerById(id: $id) {
-        ...customerDetails
-    }
-    b: customerById(id: 2) {
+    customerById(id: $id) {
         ...customerDetails
     }
 }

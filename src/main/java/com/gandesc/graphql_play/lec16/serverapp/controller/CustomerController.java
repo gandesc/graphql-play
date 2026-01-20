@@ -23,7 +23,8 @@ public class CustomerController {
 
   @QueryMapping
   public Mono<CustomerDto> customerById(@Argument Integer id) {
-    return this.service.customerById(id);
+    return this.service.customerById(id)
+        .switchIfEmpty(Mono.error(new RuntimeException("no user found")));
   }
 
   @MutationMapping
