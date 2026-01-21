@@ -1,6 +1,7 @@
 package com.gandesc.graphql_play.lec16.serverapp.controller;
 
 import com.gandesc.graphql_play.lec16.dto.CustomerDto;
+import com.gandesc.graphql_play.lec16.dto.CustomerNotFound;
 import com.gandesc.graphql_play.lec16.dto.DeleteResponseDto;
 import com.gandesc.graphql_play.lec16.serverapp.service.CustomerService;
 import lombok.RequiredArgsConstructor;
@@ -22,9 +23,10 @@ public class CustomerController {
   }
 
   @QueryMapping
-  public Mono<CustomerDto> customerById(@Argument Integer id) {
+  public Mono<Object> customerById(@Argument Integer id) {
     return this.service.customerById(id)
-        .switchIfEmpty(Mono.error(new RuntimeException("no user found")));
+        .cast(Object.class)
+        .defaultIfEmpty(new CustomerNotFound(id, "not found"));
   }
 
   @MutationMapping

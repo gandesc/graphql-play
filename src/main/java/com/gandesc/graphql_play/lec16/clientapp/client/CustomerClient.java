@@ -2,6 +2,8 @@ package com.gandesc.graphql_play.lec16.clientapp.client;
 
 import com.gandesc.graphql_play.lec13.entity.Customer;
 import com.gandesc.graphql_play.lec16.dto.CustomerDto;
+import com.gandesc.graphql_play.lec16.dto.CustomerNotFound;
+import com.gandesc.graphql_play.lec16.dto.CustomerResponse;
 import com.gandesc.graphql_play.lec16.dto.GenericResponse;
 import com.gandesc.graphql_play.lec16.dto.MultiCustomerAssignment;
 import org.springframework.beans.factory.annotation.Value;
@@ -36,6 +38,22 @@ public class CustomerClient {
           return Objects.nonNull(field.getValue())
               ? new GenericResponse<>(field.toEntity(CustomerDto.class))
               : new GenericResponse<>(field.getErrors());
+        });
+  }
+
+  public Mono<CustomerResponse> getCustomerByIdWithUnion(Integer id) {
+    return this.client.documentName("customer-by-id")
+        .variable("id", id)
+        .execute()
+        .map(cr -> {
+          var field = cr.field("customerById");
+
+          var isCustomer = "Customer".equals(cr.field("customerById.type")
+              .getValue().toString());
+
+          return isCustomer
+              ? field.toEntity(CustomerDto.class)
+              : field.toEntity(CustomerNotFound.class);
         });
   }
 }

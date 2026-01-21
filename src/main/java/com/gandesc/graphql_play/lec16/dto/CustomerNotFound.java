@@ -9,9 +9,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class CustomerDto implements CustomerResponse{
+public class CustomerNotFound implements CustomerResponse {
   private Integer id;
-  private String name;
-  private Integer age;
-  private String city;
+  @Builder.Default
+  private String message = "user not found";
 }

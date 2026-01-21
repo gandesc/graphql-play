@@ -1,6 +1,11 @@
 query GetCustomerById($id: ID!) {
     customerById(id: $id) {
+        type: __typename
         ...customerDetails
+        ... on CustomerNotFound {
+            id
+            message
+        }
     }
 }
 
