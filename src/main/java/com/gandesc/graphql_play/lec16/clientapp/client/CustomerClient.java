@@ -1,11 +1,9 @@
 package com.gandesc.graphql_play.lec16.clientapp.client;
 
-import com.gandesc.graphql_play.lec13.entity.Customer;
 import com.gandesc.graphql_play.lec16.dto.CustomerDto;
 import com.gandesc.graphql_play.lec16.dto.CustomerNotFound;
 import com.gandesc.graphql_play.lec16.dto.CustomerResponse;
 import com.gandesc.graphql_play.lec16.dto.GenericResponse;
-import com.gandesc.graphql_play.lec16.dto.MultiCustomerAssignment;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.graphql.client.ClientGraphQlResponse;
 import org.springframework.graphql.client.HttpGraphQlClient;
@@ -55,5 +53,12 @@ public class CustomerClient {
               ? field.toEntity(CustomerDto.class)
               : field.toEntity(CustomerNotFound.class);
         });
+  }
+
+  public Mono<List<CustomerDto>> allCustomers() {
+    return this.client.documentName("crud-operations")
+        .operationName("GetAll")
+        .retrieve("response")
+        .toEntityList(CustomerDto.class);
   }
 }

@@ -19,7 +19,7 @@ public class ClientDemo implements CommandLineRunner {
 
   @Override
   public void run(String... args) {
-    getCustomerById().subscribe();
+    allCustomersDemo().subscribe();
   }
 
   /* {
@@ -53,6 +53,13 @@ public class ClientDemo implements CommandLineRunner {
     return this.executor(
         "Get Customer By Id",
         this.client.getCustomerByIdWithUnion(10)
+    );
+  }
+
+  private Mono<Void> allCustomersDemo() {
+    return this.executor(
+        "Get All customers",
+        this.client.allCustomers()
     );
   }
 
