@@ -3,6 +3,7 @@ package com.gandesc.graphql_play.lec16.clientapp.client;
 import com.gandesc.graphql_play.lec16.dto.CustomerDto;
 import com.gandesc.graphql_play.lec16.dto.CustomerNotFound;
 import com.gandesc.graphql_play.lec16.dto.CustomerResponse;
+import com.gandesc.graphql_play.lec16.dto.DeleteResponseDto;
 import com.gandesc.graphql_play.lec16.dto.GenericResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
@@ -78,6 +79,12 @@ public class CustomerClient {
 
   public Mono<CustomerDto> updateCustomer(Integer id, CustomerDto cust) {
     return this.crud("UpdateCustomer", Map.of("id", id, "customer", cust),
+        new ParameterizedTypeReference<>() {
+        });
+  }
+
+  public Mono<DeleteResponseDto> deleteCustomer(Integer id) {
+    return this.crud("DeleteCustomer", Map.of("id", id),
         new ParameterizedTypeReference<>() {
         });
   }

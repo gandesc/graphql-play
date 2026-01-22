@@ -23,6 +23,7 @@ public class ClientDemo implements CommandLineRunner {
         .then(customerByIdDemo())
         .then(createCustomerDemo())
         .then(updateCustomerDemo())
+        .then(deleteCustomerDemo())
         .subscribe();
   }
 
@@ -89,6 +90,13 @@ public class ClientDemo implements CommandLineRunner {
     return this.executor(
         "Update customer",
         this.client.updateCustomer(2, cust)
+    );
+  }
+
+  private Mono<Void> deleteCustomerDemo() {
+    return this.executor(
+        "Delete customer",
+        this.client.deleteCustomer(3)
     );
   }
 
