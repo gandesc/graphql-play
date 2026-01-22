@@ -76,6 +76,12 @@ public class CustomerClient {
         });
   }
 
+  public Mono<CustomerDto> updateCustomer(Integer id, CustomerDto cust) {
+    return this.crud("UpdateCustomer", Map.of("id", id, "customer", cust),
+        new ParameterizedTypeReference<>() {
+        });
+  }
+
   private <T> Mono<T> crud(String opName, Map<String, Object> vars, ParameterizedTypeReference<T> returnType) {
     return this.client.documentName("crud-operations")
         .operationName(opName)

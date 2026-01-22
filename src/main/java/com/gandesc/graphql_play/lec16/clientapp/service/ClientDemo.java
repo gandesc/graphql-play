@@ -22,6 +22,7 @@ public class ClientDemo implements CommandLineRunner {
     allCustomersDemo()
         .then(customerByIdDemo())
         .then(createCustomerDemo())
+        .then(updateCustomerDemo())
         .subscribe();
   }
 
@@ -79,6 +80,15 @@ public class ClientDemo implements CommandLineRunner {
     return this.executor(
         "Create customer",
         this.client.createCustomer(cust)
+    );
+  }
+
+  private Mono<Void> updateCustomerDemo() {
+    var cust = CustomerDto.builder().age(35).city("Dallas").name("Jackson").build();
+
+    return this.executor(
+        "Update customer",
+        this.client.updateCustomer(2, cust)
     );
   }
 
