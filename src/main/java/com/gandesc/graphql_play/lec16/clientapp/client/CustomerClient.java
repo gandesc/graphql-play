@@ -5,12 +5,15 @@ import com.gandesc.graphql_play.lec16.dto.CustomerNotFound;
 import com.gandesc.graphql_play.lec16.dto.CustomerResponse;
 import com.gandesc.graphql_play.lec16.dto.GenericResponse;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.graphql.client.ClientGraphQlResponse;
 import org.springframework.graphql.client.HttpGraphQlClient;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 @Component
@@ -56,9 +59,28 @@ public class CustomerClient {
   }
 
   public Mono<List<CustomerDto>> allCustomers() {
+    return this.crud("GetAll", Collections.emptyMap(),
+        new ParameterizedTypeReference<>() {
+        });
+  }
+
+  public Mono<CustomerDto> customerById(Integer id) {
+    return this.crud("GetCustomerById", Map.of("id", id),
+        new ParameterizedTypeReference<>() {
+        });
+  }
+
+  public Mono<CustomerDto> createCustomer(CustomerDto cust) {
+    return this.crud("CreateCustomer", Map.of("customer", cust),
+        new ParameterizedTypeReference<>() {
+        });
+  }
+
+  private <T> Mono<T> crud(String opName, Map<String, Object> vars, ParameterizedTypeReference<T> returnType) {
     return this.client.documentName("crud-operations")
-        .operationName("GetAll")
+        .operationName(opName)
+        .variables(vars)
         .retrieve("response")
-        .toEntityList(CustomerDto.class);
+        .toEntity(returnType);
   }
 }

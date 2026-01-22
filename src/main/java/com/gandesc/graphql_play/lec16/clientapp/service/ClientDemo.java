@@ -19,7 +19,10 @@ public class ClientDemo implements CommandLineRunner {
 
   @Override
   public void run(String... args) {
-    allCustomersDemo().subscribe();
+    allCustomersDemo()
+        .then(customerByIdDemo())
+        .then(createCustomerDemo())
+        .subscribe();
   }
 
   /* {
@@ -60,6 +63,22 @@ public class ClientDemo implements CommandLineRunner {
     return this.executor(
         "Get All customers",
         this.client.allCustomers()
+    );
+  }
+
+  private Mono<Void> customerByIdDemo() {
+    return this.executor(
+        "Get customer by id",
+        this.client.customerById(1)
+    );
+  }
+
+  private Mono<Void> createCustomerDemo() {
+    var cust = CustomerDto.builder().age(15).city("Detroit").name("Fooman").build();
+
+    return this.executor(
+        "Create customer",
+        this.client.createCustomer(cust)
     );
   }
 
