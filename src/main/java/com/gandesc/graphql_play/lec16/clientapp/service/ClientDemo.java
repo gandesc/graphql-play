@@ -1,6 +1,7 @@
 package com.gandesc.graphql_play.lec16.clientapp.service;
 
 import com.gandesc.graphql_play.lec16.clientapp.client.CustomerClient;
+import com.gandesc.graphql_play.lec16.clientapp.client.SubscriptionClient;
 import com.gandesc.graphql_play.lec16.dto.CustomerDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,9 +17,15 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ClientDemo implements CommandLineRunner {
   private final CustomerClient client;
+  private final SubscriptionClient subscriptionClient;
 
   @Override
   public void run(String... args) {
+    //this is non blocking
+    this.subscriptionClient.customerEvents()
+        .doOnNext(e -> log.info("** {} **", e))
+        .subscribe();
+
     allCustomersDemo()
         .then(customerByIdDemo())
         .then(createCustomerDemo())
