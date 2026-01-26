@@ -32,7 +32,10 @@ public class CustomerClient {
   }
 
   public Mono<GenericResponse<CustomerDto>> getCustomerById(Integer id) {
-    return this.client.documentName("customer-by-id")
+    return this.client
+        .mutate().header("a", "b").build()
+        //.mutate().webClient(b -> b.defaultHeader()).build()
+        .documentName("customer-by-id")
         .variable("id", id)
         .execute()
         .map(cr -> {
