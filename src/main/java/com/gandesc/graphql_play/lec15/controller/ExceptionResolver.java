@@ -15,11 +15,11 @@ import java.util.List;
 @Component
 public class ExceptionResolver implements DataFetcherExceptionResolver {
   @Override
-  public Mono<List<GraphQLError>> resolveException(Throwable exception, DataFetchingEnvironment environment) {
-    var ex = toApplicationException(exception);
+  public Mono<List<GraphQLError>> resolveException(Throwable t, DataFetchingEnvironment env) {
+    var ex = toApplicationException(t);
 
-    GraphQLError err = GraphqlErrorBuilder.newError(environment)
-        .message(exception.getMessage())
+    GraphQLError err = GraphqlErrorBuilder.newError(env)
+        .message(t.getMessage())
         .errorType(ex.getErrorType())
         .extensions(ex.getExtensions())
         .build();
