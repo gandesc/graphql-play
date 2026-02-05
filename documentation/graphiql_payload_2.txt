@@ -1,0 +1,82 @@
+http://localhost:8080/graphiql?path=/graphql
+------------
+query All {
+  customers {
+    id
+    age
+    city
+    name
+  }
+}
+
+query ById {
+  customerById(id: "11") {
+    ... CustomerDetails
+  }
+}
+
+mutation Create($customer: CustomerInput!) {
+  createCustomer(customer:  $customer) {
+    id,
+    name,
+    age,
+    city
+  }
+}
+
+mutation Update {
+  updateCustomer(id: 1, customer:  {
+    name: "jackson"
+  }) {
+    id,
+    name,
+    age,
+    city
+  }
+}
+
+mutation Delete {
+  deleteCustomer(id: 5) {
+    id,
+    status
+  }
+}
+
+mutation MultipleMutations($customer: CustomerInput!) {
+  createCustomer(customer:  $customer) {
+    id,
+    name,
+    age,
+    city
+  }
+
+  updateCustomer(id: 6, customer:  {
+    name: "jackson"
+  }) {
+    id,
+    name,
+    age,
+    city
+  }
+}
+
+fragment CustomerDetails on CustomerResponse {
+  type: __typename
+  ... on Customer {
+    id,
+    name,
+  }
+  ... on CustomerNotFound {
+    id,
+    message
+  }
+}
+
+------ variables ------
+{
+  "customer": {
+    "name": "obie",
+    "age": 45,
+    "city": "detroit"
+  }
+}
